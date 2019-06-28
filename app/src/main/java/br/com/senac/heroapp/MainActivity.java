@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editTextHero;
     EditText editTextClasse;
     EditText editTextRanking;
+    EditText editTextPoder;
     Button buttonSalvar;
     ProgressBar progressBar;
     ListView listView;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         editTextHero = findViewById(R.id.editTextHero);
         editTextClasse = findViewById(R.id.editTextClasse);
         editTextRanking = findViewById(R.id.editTextRaking);
+        editTextPoder = findViewById(R.id.editTextPoder);
 
         buttonSalvar = findViewById(R.id.buttonSalvar);
 
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         String hero = editTextHero.getText().toString().trim();
         String classe = editTextClasse.getText().toString().trim();
         String ranking = editTextRanking.getText().toString().trim();
+        String poder = editTextPoder.getText().toString().trim();
 
         if (TextUtils.isEmpty(hero)){
             editTextHero.setError("Digite seu nome de heroi");
@@ -101,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         params.put("nome", hero);
         params.put("classe", classe);
         params.put("ranking", ranking);
+        params.put("poder", poder);
 
         PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_HEROAPP, params, CODE_POST_REQUEST);
         request.execute();
@@ -111,12 +115,14 @@ public class MainActivity extends AppCompatActivity {
         String hero = editTextHero.getText().toString().trim();
         String classe = editTextClasse.getText().toString().trim();
         String ranking = editTextRanking.getText().toString().trim();
+        String poder = editTextPoder.getText().toString().trim();
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("id_nome", id);
+        params.put("id", id);
         params.put("nome", hero);
         params.put("classe", classe);
         params.put("ranking", ranking);
+        params.put("poder", poder);
 
         PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UPDATE_HEROAPP, params, CODE_POST_REQUEST);
         request.execute();
@@ -125,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         editTextHero.setText("");
         editTextRanking.setText("");
         editTextClasse.setText("");
+        editTextPoder.setText("");
 
         isUpdating = false;
     }
@@ -135,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void deleteHeroApp(int id){
-        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_DELETE_HEROAPP + id, null, CODE_POST_REQUEST);
+        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_DELETE_HEROAPP + id, null, CODE_GET_REQUEST);
         request.execute();
     }
 
@@ -146,10 +153,11 @@ public class MainActivity extends AppCompatActivity {
             JSONObject obj = heroapp.getJSONObject(i);
 
             heroappList.add(new HeroApp(
-                    obj.getInt("id_nome"),
+                    obj.getInt("id"),
                     obj.getString("nome"),
                     obj.getString("classe"),
-                    obj.getString("ranking")
+                    obj.getString("ranking"),
+                    obj.getString("poder")
             ));
         }
 
@@ -259,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
                     editTextHero.setText(heroApp.getHero());
                     editTextClasse.setText(heroApp.getClasse());
                     editTextRanking.setText(heroApp.getRaking());
+                    editTextPoder.setText(heroApp.getPoder());
 
                     buttonSalvar.setText("Alterar");
                 }

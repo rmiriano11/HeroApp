@@ -5,12 +5,14 @@ public class HeroApp {
     private String hero;
     private String classe;
     private String raking;
+    private String poder;
 
-    public HeroApp(int id, String hero, String classe, String raking) {
+    public HeroApp(int id, String hero, String classe, String raking, String poder) {
         Id = id;
         this.hero = hero;
         this.classe = classe;
         this.raking = raking;
+        this.poder = poder;
     }
 
     public int getId() {
@@ -43,5 +45,13 @@ public class HeroApp {
 
     public void setRaking(String raking) {
         this.raking = raking;
+    }
+
+    public String getPoder() {
+        return poder;
+    }
+
+    public void setPoder(String poder) {
+        this.poder = poder;
     }
 }
